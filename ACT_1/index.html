@@ -1,11 +1,272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cyberpunk: Edgerunners</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        :root {
+            --yellow: #f5e642;
+            --cyan: #3ee8f0;
+            --magenta: #ff3d8b;
+            --violet: #6a35d8;
+            --ink: #14102e;
+        }
+
+        body {
+            background-color: #0f0a24;
+            background-image: radial-gradient(circle at 15% 0%, rgba(255, 61, 139, .18), transparent 40%),
+                radial-gradient(circle at 90% 100%, rgba(62, 232, 240, .14), transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .card {
+            min-height: 180px;
+            border: 0;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            background-color: #1d1642;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* solid colour cards: dark text on bright backgrounds */
+        .bg-y {
+            background-color: var(--yellow);
+            color: var(--ink);
+        }
+
+        .bg-c {
+            background-color: var(--cyan);
+            color: var(--ink);
+        }
+
+        .bg-m {
+            background-color: var(--magenta);
+            color: #fff;
+        }
+
+        .bg-v {
+            background-color: var(--violet);
+            color: #fff;
+        }
+
+        .bg-hero {
+            background: linear-gradient(145deg, var(--magenta) 0%, var(--violet) 55%, #1a2f7a 100%);
+            color: #fff;
+        }
+
+        .label {
+            font-size: .9rem;
+            opacity: .75;
+        }
+
+        .value {
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .value.big {
+            font-size: 4.5rem;
+        }
+
+        /* big faded letter behind each crew card 
+        .initial {
+            position: absolute;
+            right: -.4rem;
+            bottom: -2.4rem;
+            font-size: 10rem;
+            font-weight: 800;
+            line-height: 1;
+            opacity: .18;
+            pointer-events: none;
+        }*/
+
+        .card.crew {
+            min-height: 240px;
+        }
+    </style>
 </head>
-<body>
-    
+
+<body data-bs-theme="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="text-secondary text-center py-4">Anime guide</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <!-- Row 1: hero + quick stats -->
+        <div class="row">
+            <div class="col-12 col-lg-7 p-1">
+                <div class="card bg-hero p-1 h-100" style="border-radius: 48px;">
+                    <div class="card-body justify-content-end"
+                        style="min-height: 380px; background-image: url(assets/cb2c802dad03c35278e2bf33789b4c77.jpg ); background-size: cover; background-position: bottom; background-repeat: no-repeat; ">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a class="btn btn-warning fw-bold px-4" href="https://www.netflix.com" target="_blank"
+                                rel="noopener">Where to watch</a>
+                            <a class="btn btn-outline-light px-4" href="#crew">Meet the crew</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="row">
+                    <div class="col-6 p-1">
+                        <div class="card bg-y p-1"
+                            style="background-image: url(assets/41097d9e2f9f7bfaba785898d48f6d09.jpg); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                            <div class="card-body">
+                                <div class="label" style="font-size: 30px; font-weight: 900;">Episodes</div>
+                                <div class="value big" style="color: #e52d23">10</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-1">
+                        <div class="card bg-c p-1">
+                            <div class="card-body">
+                                <div class="label">Released</div>
+                                <div class="value">Sept 2022</div>
+                                <div class="label">On Netflix</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12 p-1">
+                        <div class="card p-1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between flex-wrap gap-3">
+                                    <div>
+                                        <div class="label">Studio</div>
+                                        <div class="value">Studio Trigger</div>
+                                    </div>
+                                    <div>
+                                        <div class="label">Director</div>
+                                        <div class="value">Hiroyuki Imaishi</div>
+                                    </div>
+                                </div>
+                                <div class="label mt-3">Set in the world of the Cyberpunk 2077 video game</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: the crew -->
+        <div class="row" id="crew">
+            <div class="col-12 col-sm-6 col-lg-3 p-1">
+                <div class="card crew bg-y p-1">
+                    <!--<div class="initial">D</div>--><!---->
+                    <div class="card-body">
+                        <div class="label">Street kid turned edgerunner</div>
+                        <div class="display-6 fw-bold">David</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 p-1">
+                <div class="card crew bg-c p-1">
+                    <!--<div class="initial">L</div>-->
+                    <div class="card-body">
+                        <div class="label">Netrunner with a secret</div>
+                        <div class="display-6 fw-bold">Lucy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 p-1">
+                <div class="card crew bg-m p-1">
+                    <!--<div class="initial">M</div>-->
+                    <div class="card-body">
+                        <div class="label">Leader of the crew</div>
+                        <div class="display-6 fw-bold">Maine</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 p-1">
+                <div class="card crew bg-v p-1">
+                    <!--<div class="initial">R</div>-->
+                    <div class="card-body">
+                        <div class="label">The crew's wildcard</div>
+                        <div class="display-6 fw-bold">Rebecca</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Night City + themes and tech -->
+        <div class="row">
+            <div class="col-12 col-lg-4 p-1">
+                <div class="card p-1 h-100"
+                    style="border-radius: 28px 28px 28px 140px; background: linear-gradient(200deg, #1a2f7a, #1d1642 70%);">
+                    <div class="card-body justify-content-end ps-5">
+                        <div class="label">Setting</div>
+                        <div class="display-5 fw-bold">Night City</div>
+                        <p class="mb-0 mt-2 opacity-75">A neon megacity ruled by corporations, where cyberware is power
+                            and survival is expensive.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="col-12 p-1">
+                        <div class="card p-1">
+                            <div class="card-body">
+                                <div class="label">What it's about</div>
+                                <div class="fs-4 fw-semibold">Ambition, loss and the cost of chasing a dream in a city
+                                    that chews people up.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4 p-1">
+                        <div class="card bg-y p-1">
+                            <div class="card-body">
+                                <div class="value">Cyberware</div>
+                                <div>Implants that upgrade the body.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 p-1">
+                        <div class="card bg-c p-1">
+                            <div class="card-body">
+                                <div class="value">Sandevistan</div>
+                                <div>Slows the world around the user.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 p-1">
+                        <div class="card bg-m p-1">
+                            <div class="card-body">
+                                <div class="value">Cyberpsychosis</div>
+                                <div>The price of too many upgrades.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
