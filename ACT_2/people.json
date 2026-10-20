@@ -1,0 +1,175 @@
+[
+  {
+    "name": "Alex",
+    "image": "images/Alex.png",
+    "type": "Bachelor",
+    "birthday": "Summer 13",
+    "home": "Pelican Town (1 River Road)",
+    "description": "A sporty, confident guy who dreams of going pro. Lives with his grandparents and loves a good game of catch.",
+    "lovedGifts": [
+      "Complete Breakfast",
+      "Salmon Dinner"
+    ]
+  },
+  {
+    "name": "Elliott",
+    "image": "images/Elliott.png",
+    "type": "Bachelor",
+    "birthday": "Fall 5",
+    "home": "Beach cabin",
+    "description": "A romantic writer living by the sea, working on his novel and speaking in flowery prose.",
+    "lovedGifts": [
+      "Crab Cakes",
+      "Lobster",
+      "Pomegranate",
+      "Tom Kha Soup"
+    ]
+  },
+  {
+    "name": "Harvey",
+    "image": "images/Harvey.png",
+    "type": "Bachelor",
+    "birthday": "Winter 14",
+    "home": "Medical clinic",
+    "description": "The town doctor. Kind and a little anxious, with a love of model airplanes.",
+    "lovedGifts": [
+      "Coffee",
+      "Pickles",
+      "Super Meal",
+      "Truffle Oil",
+      "Wine"
+    ]
+  },
+  {
+    "name": "Sam",
+    "image": "images/Sam.png",
+    "type": "Bachelor",
+    "birthday": "Summer 17",
+    "home": "Pelican Town (1 Willow Lane)",
+    "description": "Easygoing musician with a band, a skateboard, and a heart of gold.",
+    "lovedGifts": [
+      "Cactus Fruit",
+      "Maple Bar",
+      "Pizza",
+      "Tigerseye"
+    ]
+  },
+  {
+    "name": "Sebastian",
+    "image": "images/Seb.png",
+    "type": "Bachelor",
+    "birthday": "Winter 10",
+    "home": "Carpenter's Shop basement",
+    "description": "A quiet, brooding programmer who prefers the night, motorcycles, and sci-fi.",
+    "lovedGifts": [
+      "Frozen Tear",
+      "Obsidian",
+      "Pumpkin Soup",
+      "Sashimi",
+      "Void Egg"
+    ]
+  },
+  {
+    "name": "Shane",
+    "image": "images/Shane.png",
+    "type": "Bachelor",
+    "birthday": "Spring 20",
+    "home": "Marnie's Ranch",
+    "description": "A gruff, tired JojaMart employee who loves chickens, pizza, and cold beer.",
+    "lovedGifts": [
+      "Beer",
+      "Hot Pepper",
+      "Pepper Poppers",
+      "Pizza"
+    ]
+  },
+  {
+    "name": "Abigail",
+    "image": "images/Abigail.png",
+    "type": "Bachelorette",
+    "birthday": "Fall 13",
+    "home": "Pierre's General Store",
+    "description": "Adventurous and a bit rebellious, with purple hair, a sword, and a love of video games.",
+    "lovedGifts": [
+      "Amethyst",
+      "Chocolate Cake",
+      "Pufferfish",
+      "Pumpkin",
+      "Spicy Eel"
+    ]
+  },
+  {
+    "name": "Emily",
+    "image": "images/Emily.png",
+    "type": "Bachelorette",
+    "birthday": "Spring 27",
+    "home": "Pelican Town (2 Willow Lane)",
+    "description": "A free spirit who sews her own clothes, works at the Stardrop Saloon, and believes in cosmic energy.",
+    "lovedGifts": [
+      "Amethyst",
+      "Aquamarine",
+      "Cloth",
+      "Emerald",
+      "Wool"
+    ]
+  },
+  {
+    "name": "Haley",
+    "image": "images/Haley.png",
+    "type": "Bachelorette",
+    "birthday": "Spring 14",
+    "home": "Pelican Town (2 Willow Lane)",
+    "description": "A fashion-loving blonde who may seem snobby at first but has a warm side with a camera in hand.",
+    "lovedGifts": [
+      "Coconut",
+      "Fruit Salad",
+      "Pink Cake",
+      "Sunflower"
+    ]
+  },
+  {
+    "name": "Leah",
+    "image": "images/Leah.png",
+    "type": "Bachelorette",
+    "birthday": "Winter 23",
+    "home": "Cottage near the forest",
+    "description": "A free-spirited artist who sculpts and forages, living in harmony with nature.",
+    "lovedGifts": [
+      "Goat Cheese",
+      "Salad",
+      "Stir Fry",
+      "Truffle",
+      "Wine"
+    ]
+  },
+  {
+    "name": "Maru",
+    "image": "images/Maru.png",
+    "type": "Bachelorette",
+    "birthday": "Summer 10",
+    "home": "Mountain house (Robin's family)",
+    "description": "A brilliant inventor and nurse with a passion for science, gadgets, and robotics.",
+    "lovedGifts": [
+      "Battery Pack",
+      "Cauliflower",
+      "Diamond",
+      "Gold Bar",
+      "Strawberry"
+    ]
+  },
+  {
+    "name": "Penny",
+    "image": "images/Penny.png",
+    "type": "Bachelorette",
+    "birthday": "Fall 2",
+    "home": "Trailer near the river",
+    "description": "A gentle, shy teacher who loves books, tending to the kids, and quiet moments.",
+    "lovedGifts": [
+      "Diamond",
+      "Emerald",
+      "Melon",
+      "Poppy",
+      "Sandfish"
+    ]
+  }
+]

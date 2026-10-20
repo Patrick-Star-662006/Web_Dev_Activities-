@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <title>Stardew Valley Bachelors & Bachelorettes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center my-4">Stardew Valley Bachelors &amp; Bachelorettes</h1>
+    <div class="row" id="parent"> <!--Id yung hahanapin nang js-->
+      <!-- parent  -->
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+  <script>
+    var elParent = document.getElementById("parent");
+
+    // load the data from the json file, then build the cards
+    fetch("people.json")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (people) {
+        for (var i = 0; i < people.length; i++) {
+          var gifts = "";
+          var image = "";
+
+          // only show an image if the person has one in people.json
+          if (people[i].image) {
+            // the frame is a background; the portrait sits inside it
+            image = `<div class="mx-auto mb-3 p-3"
+                  style="width: 220px; aspect-ratio: 1 / 1; background: url('images/frame.png') center / 100% 100% no-repeat; image-rendering: pixelated;">
+                  <img src="` + people[i].image + `" alt="Portrait of ` + people[i].name + `"
+                    class="w-100 h-100"
+                    style="object-fit: contain; image-rendering: pixelated;"
+                    onerror="this.style.display='none'">
+                </div>`;
+          }
+
+          // list of loved gifts as plain badges (no background color)
+          for (var j = 0; j < people[i].lovedGifts.length; j++) {
+            gifts += `<span class="badge border text-body fw-normal me-1 mb-1">` + people[i].lovedGifts[j] + `</span>`;
+          }
+
+          elParent.innerHTML +=
+            `<div class="col-12 col-md-6 col-lg-4">
+              <div class="card p-3 my-3 shadow rounded-4 h-100">
+                ` + image + `
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="h3 mb-0">` + people[i].name + `</div>
+                  <span class="badge border text-body fw-normal">` + people[i].type + `</span>
+                </div>
+                <div class="mt-2 text-body-secondary">
+                  ` + people[i].birthday + ` &middot; ` + people[i].home + `
+                </div>
+                <div class="mt-3">` + people[i].description + `</div>
+                <div class="mt-3">
+                  <div class="fw-bold mb-1">Loved gifts</div>
+                  ` + gifts + `
+                </div>
+              </div>
+            </div>`;
+        }
+      })
+      .catch(function (error) {
+        elParent.innerHTML = `<div class="alert alert-danger">Could not load people.json: ` + error + `</div>`;
+      });
+  </script>
+</body>
+
+</html>
