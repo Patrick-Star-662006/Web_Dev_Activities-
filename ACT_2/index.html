@@ -8,15 +8,200 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --parchment: #fff4d6;
+      --parchment-dark: #f3deaa;
+      --wood: #8b5a2b;
+      --wood-dark: #5c3a1a;
+      --ink: #3b2a1a;
+    }
+
+    body {
+      background: url('images/BG.png') center / cover no-repeat fixed;
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      /* lets the footer sit at the bottom */
+    }
+
+    /* sticky header: stays at the top while you scroll */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      /* stays above the cards */
+      background: var(--wood);
+      border-bottom: 4px solid var(--wood-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .35);
+    }
+
+    .site-header .page-title {
+      margin: 0;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      color: var(--parchment);
+      text-shadow: 2px 2px 0 var(--wood-dark);
+    }
+
+    .btn-portfolio {
+      font-weight: 600;
+      font-size: .9rem;
+      white-space: nowrap;
+      color: var(--wood-dark);
+      background: #ffc933;
+      border: 2px solid var(--wood-dark);
+      border-radius: .5rem;
+      padding: .3rem .8rem;
+      text-decoration: none;
+    }
+
+    .btn-portfolio:hover {
+      background: #ffd95e;
+      color: var(--wood-dark);
+    }
+
+    /* footer: pushed to the bottom even when the page is short */
+    .site-footer {
+      background: var(--wood);
+      border-top: 4px solid var(--wood-dark);
+      color: var(--parchment);
+      font-size: .9rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* card: solid parchment so text is always readable.
+       The old landscape image is kept only as a faint texture at the bottom. */
+    .stardew-card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255, 244, 214, .93), rgba(255, 244, 214, .93));
+      border: 4px solid var(--wood);
+      outline: 2px solid var(--parchment-dark);
+      outline-offset: -8px;
+      border-radius: 1rem;
+      box-shadow: 0 6px 0 var(--wood-dark), 0 12px 24px rgba(0, 0, 0, .3);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .stardew-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 0 var(--wood-dark), 0 18px 28px rgba(0, 0, 0, .35);
+    }
+
+    .portrait {
+      width: 180px;
+      aspect-ratio: 1 / 1;
+      background: url('images/frame.png') center / 100% 100% no-repeat;
+      image-rendering: pixelated;
+    }
+
+    .portrait img {
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    .char-name {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.75rem;
+      line-height: 1.1;
+      color: var(--wood-dark);
+    }
+
+    .type-badge {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      padding: .35em .75em;
+      border-radius: 999px;
+      border: 2px solid var(--wood-dark);
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .type-bachelor {
+      background: #3a7ca5;
+    }
+
+    .type-bachelorette {
+      background: #c2527a;
+    }
+
+    .meta {
+      font-size: .9rem;
+      color: #7a5a3a;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: .4rem;
+      align-items: baseline;
+    }
+
+    .meta-label {
+      font-weight: 700;
+      color: var(--wood);
+      min-width: 4.2rem;
+    }
+
+    .desc {
+      line-height: 1.5;
+    }
+
+    .gifts-title {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-weight: 700;
+      color: var(--wood-dark);
+      border-bottom: 2px dashed var(--wood);
+      padding-bottom: .25rem;
+      margin-bottom: .5rem;
+    }
+
+    .gift {
+      display: inline-block;
+      margin: 0 .3rem .4rem 0;
+      padding: .2em .65em;
+      font-size: .8rem;
+      color: var(--ink);
+      background: #fff;
+      border: 2px solid var(--parchment-dark);
+      border-radius: .5rem;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1 class="text-center my-4">Stardew Valley Bachelors &amp; Bachelorettes</h1>
-    <div class="row" id="parent"> <!--Id yung hahanapin nang js-->
-      <!-- parent  -->
+  <header class="site-header">
+    <div class="container d-flex justify-content-between align-items-center gap-3 py-2">
+      <h1 class="page-title">Stardew Valley Bachelors &amp; Bachelorettes</h1>
+      <a href="https://patrick-star-662006.github.io/" class="btn-portfolio">&larr; Portfolio</a>
     </div>
-  </div>
+  </header>
+
+  <main class="container py-5">
+    <div class="row g-4" id="parent"></div>
+  </main>
+
+  <footer class="site-footer d-flex flex-wrap justify-content-between align-items-center gap-2 mt-auto px-3 py-2"
+    style="border-top: 1px solid rgba(255,201,51,.25); font-size: .75rem; color: rgba(255,255,255,.75);">
+    <span>© 2026 Amiler Jay Patrick · Fan-made, not affiliated with ConcernedApe</span>
+    <span class="d-flex gap-3">
+      <a href="https://patrick-star-662006.github.io/" style="color: #ffc933; text-decoration: none;">Portfolio</a>
+      <a href="https://github.com/Patrick-Star-662006" target="_blank" rel="noopener"
+        style="color: #ffc933; text-decoration: none;">GitHub</a>
+      <a href="#" style="color: #ffc933; text-decoration: none;">Back to top ↑</a>
+    </span>
+  </footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
@@ -25,52 +210,53 @@
   <script>
     var elParent = document.getElementById("parent");
 
-    // load the data from the json file, then build the cards
     fetch("people.json")
       .then(function (response) {
         return response.json();
       })
       .then(function (people) {
+        var html = "";
+
         for (var i = 0; i < people.length; i++) {
           var gifts = "";
           var image = "";
+          var typeClass = String(people[i].type).toLowerCase() === "bachelorette"
+            ? "type-bachelorette"
+            : "type-bachelor";
 
-          // only show an image if the person has one in people.json
           if (people[i].image) {
-            // the frame is a background; the portrait sits inside it
-            image = `<div class="mx-auto mb-3 p-3"
-                  style="width: 220px; aspect-ratio: 1 / 1; background: url('images/frame.png') center / 100% 100% no-repeat; image-rendering: pixelated;">
-                  <img src="` + people[i].image + `" alt="Portrait of ` + people[i].name + `"
-                    class="w-100 h-100"
-                    style="object-fit: contain; image-rendering: pixelated;"
-                    onerror="this.style.display='none'">
-                </div>`;
+            image = `<div class="portrait mx-auto mb-3 p-3">
+                <img src="` + people[i].image + `" alt="Portrait of ` + people[i].name + `"
+                  class="w-100 h-100" onerror="this.style.display='none'">
+              </div>`;
           }
 
-          // list of loved gifts as plain badges (no background color)
           for (var j = 0; j < people[i].lovedGifts.length; j++) {
-            gifts += `<span class="badge border text-body fw-normal me-1 mb-1">` + people[i].lovedGifts[j] + `</span>`;
+            gifts += `<span class="gift">` + people[i].lovedGifts[j] + `</span>`;
           }
 
-          elParent.innerHTML +=
+          html +=
             `<div class="col-12 col-md-6 col-lg-4">
-              <div class="card p-3 my-3 shadow rounded-4 h-100">
+              <div class="stardew-card p-4 h-100 d-flex flex-column">
                 ` + image + `
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="h3 mb-0">` + people[i].name + `</div>
-                  <span class="badge border text-body fw-normal">` + people[i].type + `</span>
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                  <div class="char-name">` + people[i].name + `</div>
+                  <span class="type-badge ` + typeClass + `">` + people[i].type + `</span>
                 </div>
-                <div class="mt-2 text-body-secondary">
-                  ` + people[i].birthday + ` &middot; ` + people[i].home + `
+                <div class="meta mt-2">
+                  <div class="meta-row"><span class="meta-label">Birthday</span><span>` + people[i].birthday + `</span></div>
+                  <div class="meta-row"><span class="meta-label">Home</span><span>` + people[i].home + `</span></div>
                 </div>
-                <div class="mt-3">` + people[i].description + `</div>
-                <div class="mt-3">
-                  <div class="fw-bold mb-1">Loved gifts</div>
+                <div class="desc mt-3">` + people[i].description + `</div>
+                <div class="mt-auto pt-3">
+                  <div class="gifts-title">Loved gifts</div>
                   ` + gifts + `
                 </div>
               </div>
             </div>`;
         }
+
+        elParent.innerHTML = html;
       })
       .catch(function (error) {
         elParent.innerHTML = `<div class="alert alert-danger">Could not load people.json: ` + error + `</div>`;
