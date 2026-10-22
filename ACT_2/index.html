@@ -27,15 +27,12 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      /* lets the footer sit at the bottom */
     }
 
-    /* sticky header: stays at the top while you scroll */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 1030;
-      /* stays above the cards */
       background: var(--wood);
       border-bottom: 4px solid var(--wood-dark);
       box-shadow: 0 4px 12px rgba(0, 0, 0, .35);
@@ -67,7 +64,6 @@
       color: var(--wood-dark);
     }
 
-    /* footer: pushed to the bottom even when the page is short */
     .site-footer {
       background: var(--wood);
       border-top: 4px solid var(--wood-dark);
@@ -77,8 +73,6 @@
       padding: 1rem;
     }
 
-    /* card: solid parchment so text is always readable.
-       The old landscape image is kept only as a faint texture at the bottom. */
     .stardew-card {
       position: relative;
       overflow: hidden;
