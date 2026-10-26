@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DigiDex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --page: #dce6ea;
+            --shell: #f26b3a;
+            --shell-dark: #c9501f;
+            --bezel: #1b2b4b;
+            --lcd: #b9cba4;
+            --ink: #1f2a1c;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--page);
+            font-family: 'Rubik', system-ui, sans-serif;
+            color: var(--bezel);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 16px 48px;
+        }
+
+        .device {
+            width: 100%;
+            max-width: 440px;
+            background: var(--shell);
+            border-radius: 32px 32px 48px 48px;
+            padding: 22px 20px 24px;
+            box-shadow:
+                inset 0 -6px 0 var(--shell-dark),
+                0 24px 40px -24px rgba(27, 43, 75, .55);
+        }
+
+        .device-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+
+        .device-head h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: .01em;
+            color: var(--white);
+        }
+
+        .led {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #7b2c0e;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4);
+            transition: background .2s, box-shadow .2s;
+        }
+
+        .led.on {
+            background: #ffe27a;
+            box-shadow: 0 0 10px 3px rgba(255, 226, 122, .85);
+        }
+
+        /* Search */
+        .search {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .search input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font: inherit;
+            background: var(--white);
+            color: var(--bezel);
+        }
+
+        .search input::placeholder {
+            color: #7a869b;
+        }
+
+        button {
+            font: inherit;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .btn {
+            background: var(--bezel);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-weight: 500;
+            box-shadow: 0 3px 0 #0d1830;
+            transition: transform .08s, box-shadow .08s;
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #0d1830;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .search input:focus-visible {
+            outline-color: var(--bezel);
+        }
+
+        /* Screen */
+        .bezel {
+            background: var(--bezel);
+            border-radius: 20px;
+            padding: 12px;
+        }
+
+        .lcd {
+            background: var(--lcd);
+            border-radius: 10px;
+            padding: 16px 16px 20px;
+            color: var(--ink);
+            font-family: 'DotGothic16', monospace;
+            box-shadow: inset 0 3px 8px rgba(31, 42, 28, .35);
+            min-height: 440px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lcd::after {
+            /* faint pixel grid */
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(0deg, rgba(31, 42, 28, .06) 0 1px, transparent 1px 3px);
+        }
+
+        .lcd-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+        }
+
+        .portrait {
+            margin: 12px auto 8px;
+            width: min(100%, 260px);
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+        }
+
+        .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* white image backgrounds drop into the LCD green */
+            mix-blend-mode: multiply;
+            filter: contrast(1.05) saturate(.75);
+        }
+
+        .portrait.scan {
+            animation: scan .4s steps(8) both;
+        }
+
+        @keyframes scan {
+            from {
+                clip-path: inset(0 0 100% 0);
+            }
+
+            to {
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        .digimon-name {
+            margin: 4px 0 14px;
+            text-align: center;
+            font-size: 1.9rem;
+            line-height: 1.1;
+            overflow-wrap: anywhere;
+        }
+
+        .stages {
+            display: flex;
+            gap: 4px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .stages li {
+            flex: 1;
+            height: 12px;
+            background: rgba(31, 42, 28, .18);
+        }
+
+        .stages li.on {
+            background: var(--ink);
+        }
+
+        .stage-names {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: .72rem;
+            opacity: .75;
+        }
+
+        .message {
+            text-align: center;
+            padding-top: 90px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Browse controls */
+        .browse {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            gap: 12px;
+        }
+
+        .count {
+            color: var(--white);
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 380px) {
+            .digimon-name {
+                font-size: 1.5rem;
+            }
+
+            .stage-names {
+                font-size: .62rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .portrait.scan {
+                animation: none;
+            }
+
+            .btn,
+            .led {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="device">
+        <div class="device-head">
+            <h1>DigiDex</h1>
+            <div class="led" id="led" aria-hidden="true"></div>
+        </div>
+
+        <form class="search" id="searchForm" autocomplete="off">
+            <input type="text" id="searchInput" list="names" aria-label="Digimon name or number"
+                placeholder="Name or number, like Agumon or 9">
+            <button type="submit" class="btn">Scan</button>
+        </form>
+        <datalist id="names"></datalist>
+
+        <div class="bezel">
+            <div class="lcd" aria-live="polite">
+                <div id="message" class="message">Loading Digimon...</div>
+
+                <div id="card" hidden>
+                    <div class="lcd-top">
+                        <span id="number"></span>
+                        <span id="stage"></span>
+                    </div>
+                    <div class="portrait" id="portrait">
+                        <img id="image" alt="">
+                    </div>
+                    <h2 class="digimon-name" id="name"></h2>
+                    <ul class="stages" id="stages" aria-hidden="true">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="stage-names" aria-hidden="true">
+                        <span>Fresh</span><span>Rookie</span><span>Champion</span><span>Mega</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="browse">
+            <button type="button" class="btn" id="prev" aria-label="Previous Digimon">Previous</button>
+            <span class="count" id="count"></span>
+            <button type="button" class="btn" id="next" aria-label="Next Digimon">Next</button>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'https://digimon-api.vercel.app/api/digimon';
+
+        // Evolution order. "Training" is the same stage as "In Training".
+        // "Armor" is a side branch, so it lights no pip on the ladder.
+        const STAGES = ['fresh', 'in training', 'rookie', 'champion', 'ultimate', 'mega'];
+
+        var list = [];
+        var index = 0;
+
+        var elMessage = document.getElementById('message');
+        var elCard = document.getElementById('card');
+        var elNumber = document.getElementById('number');
+        var elStage = document.getElementById('stage');
+        var elPortrait = document.getElementById('portrait');
+        var elImage = document.getElementById('image');
+        var elName = document.getElementById('name');
+        var elStages = document.querySelectorAll('#stages li');
+        var elCount = document.getElementById('count');
+        var elLed = document.getElementById('led');
+        var elInput = document.getElementById('searchInput');
+        var elNames = document.getElementById('names');
+
+        function showMessage(text) {
+            elCard.hidden = true;
+            elMessage.hidden = false;
+            elMessage.textContent = text;
+        }
+
+        function show(i) {
+            index = i;
+            var d = list[i];
+
+            elMessage.hidden = true;
+            elCard.hidden = false;
+
+            elNumber.textContent = 'No. ' + String(i + 1).padStart(3, '0');
+            elStage.textContent = d.level;
+            elName.textContent = d.name;
+            elCount.textContent = (i + 1) + ' of ' + list.length;
+
+            var key = d.level.toLowerCase() === 'training' ? 'in training' : d.level.toLowerCase();
+            var pos = STAGES.indexOf(key);
+            elStages.forEach(function (li, n) {
+                li.classList.toggle('on', pos !== -1 && n <= pos);
+            });
+
+            // LED lights while the image loads, then goes dark
+            elLed.classList.add('on');
+            elImage.onload = elImage.onerror = function () { elLed.classList.remove('on'); };
+            elImage.alt = d.name;
+            elImage.src = d.img;
+
+            // replay the scan-in effect
+            elPortrait.classList.remove('scan');
+            void elPortrait.offsetWidth;
+            elPortrait.classList.add('scan');
+        }
+
+        function search() {
+            var query = elInput.value.trim().toLowerCase();
+            if (!query || !list.length) return;
+
+            var i = -1;
+            if (/^\d+$/.test(query)) {
+                var n = parseInt(query, 10);
+                if (n >= 1 && n <= list.length) i = n - 1;
+            } else {
+                i = list.findIndex(function (d) { return d.name.toLowerCase() === query; });
+                if (i === -1) i = list.findIndex(function (d) { return d.name.toLowerCase().includes(query); });
+            }
+
+            if (i === -1) {
+                showMessage('No match for "' + elInput.value.trim() + '". Try a name, or a number from 1 to ' + list.length + '.');
+                elCount.textContent = '';
+                return;
+            }
+            show(i);
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            search();
+        });
+        document.getElementById('prev').addEventListener('click', function () {
+            if (list.length) show((index - 1 + list.length) % list.length);
+        });
+        document.getElementById('next').addEventListener('click', function () {
+            if (list.length) show((index + 1) % list.length);
+        });
+
+        (async function init() {
+            try {
+                var response = await fetch(API_URL);
+                list = await response.json();
+
+                list.forEach(function (d) {
+                    var opt = document.createElement('option');
+                    opt.value = d.name;
+                    elNames.appendChild(opt);
+                });
+
+                var start = list.findIndex(function (d) { return d.name.toLowerCase() === 'agumon'; });
+                show(start === -1 ? 0 : start);
+            } catch (err) {
+                showMessage('Could not load the Digimon list. Check your connection and reload the page.');
+            }
+        })();
+    </script>
+</body>
+
+</html>
