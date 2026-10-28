@@ -1,0 +1,247 @@
+:root {
+    --page: #dce6ea;
+    --shell: #f26b3a;
+    --shell-dark: #c9501f;
+    --bezel: #1b2b4b;
+    --lcd: #b9cba4;
+    --ink: #1f2a1c;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Rubik', system-ui, sans-serif;
+    color: var(--bezel);
+    background-color: var(--page);
+    background-image: url('DigiBg.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Device shell */
+.device {
+    width: 100%;
+    max-width: 440px;
+    padding: 22px 20px 24px;
+    border-radius: 32px 32px 48px 48px;
+    background: var(--shell);
+    box-shadow:
+        inset 0 -6px 0 var(--shell-dark),
+        0 24px 40px -24px rgba(27, 43, 75, .55);
+}
+
+.device-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.device-head h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    color: var(--white);
+}
+
+.led {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #7b2c0e;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4);
+    transition: background .2s, box-shadow .2s;
+}
+
+.led.on {
+    background: #ffe27a;
+    box-shadow: 0 0 10px 3px rgba(255, 226, 122, .85);
+}
+
+/* Search and buttons */
+.search {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.search input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 12px;
+    font: inherit;
+    color: var(--bezel);
+    background: var(--white);
+}
+
+.search input::placeholder {
+    color: #7a869b;
+}
+
+.btn {
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 12px;
+    font: inherit;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--bezel);
+    box-shadow: 0 3px 0 #0d1830;
+    cursor: pointer;
+    transition: transform .08s, box-shadow .08s;
+}
+
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #0d1830;
+}
+
+:focus-visible {
+    outline: 3px solid var(--white);
+    outline-offset: 2px;
+}
+
+.search input:focus-visible {
+    outline-color: var(--bezel);
+}
+
+/* Screen */
+.bezel {
+    padding: 12px;
+    border-radius: 20px;
+    background: var(--bezel);
+}
+
+.lcd {
+    position: relative;
+    min-height: 440px;
+    padding: 16px 16px 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    font-family: 'DotGothic16', monospace;
+    color: var(--ink);
+    background: var(--lcd);
+    box-shadow: inset 0 3px 8px rgba(31, 42, 28, .35);
+}
+
+/* faint pixel grid */
+.lcd::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(31, 42, 28, .06) 0 1px, transparent 1px 3px);
+}
+
+.lcd-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.message {
+    padding-top: 90px;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.portrait {
+    width: min(100%, 260px);
+    aspect-ratio: 1;
+    margin: 12px auto 8px;
+    display: grid;
+    place-items: center;
+}
+
+.portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* white image backgrounds drop into the LCD green */
+    mix-blend-mode: multiply;
+    filter: contrast(1.05) saturate(.75);
+}
+
+.portrait.scan {
+    animation: scan .4s steps(8) both;
+}
+
+@keyframes scan {
+    from {
+        clip-path: inset(0 0 100% 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.digimon-name {
+    margin: 4px 0 14px;
+    text-align: center;
+    font-size: 1.9rem;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+/* Evolution ladder */
+.stages {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stages li {
+    flex: 1;
+    height: 12px;
+    background: rgba(31, 42, 28, .18);
+}
+
+.stages li.on {
+    background: var(--ink);
+}
+
+.stage-names {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: .72rem;
+    opacity: .75;
+}
+
+/* Browse controls */
+.browse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.count {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--white);
+}
