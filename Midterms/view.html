@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DigiDex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page">
+        <header class="site-header">
+            <a class="portfolio-btn" href="https://patrick-star-662006.github.io/">&larr; Portfolio</a>
+            <div>
+                <p class="brand">DigiDex</p>
+                <p class="tagline">Your pocket guide to the Digital World</p>
+            </div>
+            <span aria-hidden="true"></span>
+        </header>
+
+        <main class="device">
+            <div class="device-head">
+                <h1>DigiDex</h1>
+                <div class="led" id="led" aria-hidden="true"></div>
+            </div>
+
+            <div class="bezel">
+                <div class="lcd" aria-live="polite">
+                    <div id="message" class="message">Loading...</div>
+
+                    <div id="card" hidden>
+                        <div class="lcd-top">
+                            <span id="number"></span>
+                            <span id="level"></span>
+                        </div>
+                        <div class="portrait">
+                            <img id="image" alt="">
+                        </div>
+                        <h2 id="name"></h2>
+                        <dl class="info">
+                            <div>
+                                <dt>Type</dt>
+                                <dd id="type"></dd>
+                            </div>
+                            <div>
+                                <dt>Attribute</dt>
+                                <dd id="attribute"></dd>
+                            </div>
+                            <div>
+                                <dt>Released</dt>
+                                <dd id="release"></dd>
+                            </div>
+                        </dl>
+                        <p class="desc" id="desc"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="browse">
+                <button type="button" class="btn" id="prev" aria-label="Previous Digimon" disabled>Previous</button>
+                <a class="btn" id="back" href="index.html">Back to list</a>
+                <button type="button" class="btn" id="next" aria-label="Next Digimon">Next</button>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>Data provided by <a href="https://digi-api.com" target="_blank" rel="noopener">Digi-API</a></p>
+            <p class="fine">Unofficial fan project. Digimon is &copy; Bandai / Toei Animation. &middot; <span
+                    id="year"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        const API = 'https://digi-api.com/api/v1/digimon';
+        const PER_PAGE = 10;
+        const NETWORK_ERROR = 'Could not reach the Digimon API. Check your connection and try again.';
+
+        let current = null;
+        let token = 0;
+
+        const $ = (id) => document.getElementById(id);
+        const elMessage = $('message');
+        const elCard = $('card');
+        const elNumber = $('number');
+        const elLevel = $('level');
+        const elName = $('name');
+        const elImage = $('image');
+        const elType = $('type');
+        const elAttribute = $('attribute');
+        const elRelease = $('release');
+        const elDesc = $('desc');
+        const elLed = $('led');
+        const elPrev = $('prev');
+        const elBack = $('back');
+
+        const params = new URLSearchParams(location.search);
+        const id = params.get('id');
+        const fromPage = parseInt(params.get('page'), 10) || null;
+
+        async function getJson(url) {
+            const res = await fetch(url);
+            if (res.status === 404) return null;
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        }
+
+        function joinNames(arr, key) {
+            return (arr || []).map((x) => x[key]).filter(Boolean).join(', ');
+        }
+
+        function englishDescription(d) {
+            const list = d.descriptions || [];
+            const en = list.find((x) => x.language === 'en_us')
+                || list.find((x) => (x.language || '').startsWith('en'));
+            return en ? en.description : '';
+        }
+
+        function setLed(on) {
+            elLed.classList.toggle('on', on);
+        }
+
+        function showMessage(text) {
+            setLed(false);
+            elCard.hidden = true;
+            elMessage.hidden = false;
+            elMessage.textContent = text;
+        }
+
+        // "Back to list" returns to the list page this Digimon is on.
+        // Uses the page the user came from; only guesses from the ID if that's unknown.
+        function updateBackLink(d) {
+            const listPage = fromPage || Math.max(1, Math.ceil(d.id / PER_PAGE));
+            elBack.href = 'index.html?page=' + listPage;
+        }
+
+        function render(d) {
+            current = d;
+            elMessage.hidden = true;
+            elCard.hidden = false;
+
+            document.title = d.name + ' | DigiDex';
+            history.replaceState(null, '', 'view.html?id=' + d.id + (fromPage ? '&page=' + fromPage : ''));
+            updateBackLink(d);
+
+            elNumber.textContent = 'No. ' + String(d.id).padStart(4, '0');
+            elName.textContent = d.name;
+            elLevel.textContent = d.levels && d.levels[0] ? d.levels[0].level : 'Unknown';
+            elType.textContent = joinNames(d.types, 'type') || '\u2014';
+            elAttribute.textContent = joinNames(d.attributes, 'attribute') || '\u2014';
+            elRelease.textContent = d.releaseDate || '\u2014';
+            elDesc.textContent = englishDescription(d);
+            elDesc.scrollTop = 0;
+            elPrev.disabled = d.id <= 1;
+
+            const src = d.images && d.images[0] ? d.images[0].href : '';
+            elImage.alt = d.name;
+
+            function reveal() {
+                setLed(false);
+                elImage.style.visibility = 'visible';
+            }
+
+            if (!src) {
+                setLed(false);
+                elImage.style.visibility = 'hidden';
+                return;
+            }
+            if (elImage.getAttribute('src') === src) {
+                reveal();
+                return;
+            }
+
+            setLed(true);
+            elImage.style.visibility = 'hidden';
+            elImage.onload = reveal;
+            elImage.onerror = () => {
+                setLed(false);
+                elImage.style.visibility = 'visible';
+            };
+            elImage.src = src;
+        }
+
+        async function load(digimonId) {
+            const mine = ++token;
+            setLed(true);
+            try {
+                const d = await getJson(API + '/' + encodeURIComponent(digimonId));
+                if (mine !== token) return;
+                if (!d || !d.id) {
+                    showMessage('Digimon not found.');
+                    return;
+                }
+                render(d);
+            } catch (err) {
+                if (mine === token) showMessage(NETWORK_ERROR);
+            }
+        }
+
+        async function step(dir) {
+            const startId = current ? current.id : 0;
+            if (dir < 0 && startId <= 1) return;
+
+            const mine = ++token;
+            setLed(true);
+            try {
+                for (let i = 1; i <= 5; i++) {
+                    const nextId = startId + dir * i;
+                    if (nextId < 1) break;
+                    const d = await getJson(API + '/' + nextId);
+                    if (mine !== token) return;
+                    if (d && d.id) { render(d); return; }
+                }
+                setLed(false);
+            } catch (err) {
+                if (mine === token) showMessage(NETWORK_ERROR);
+            }
+        }
+
+        elPrev.addEventListener('click', () => step(-1));
+        $('next').addEventListener('click', () => step(1));
+        $('year').textContent = new Date().getFullYear();
+
+        if (id) {
+            load(id);
+        } else {
+            showMessage('No Digimon selected. Go back to the list and pick one.');
+        }
+    </script>
+</body>
+
+</html>
