@@ -63,7 +63,7 @@
 
             <div class="browse">
                 <button type="button" class="btn" id="prev" aria-label="Previous Digimon" disabled>Previous</button>
-                <a class="btn" id="back" href="index2.html">Back to list</a>
+                <a class="btn" id="back" href="index3.html">Back to list</a>
                 <button type="button" class="btn" id="next" aria-label="Next Digimon">Next</button>
             </div>
         </main>
@@ -135,7 +135,7 @@
         // Uses the page the user came from; only guesses from the ID if that's unknown.
         function updateBackLink(d) {
             const listPage = fromPage || Math.max(1, Math.ceil(d.id / PER_PAGE));
-            elBack.href = 'index2.html?page=' + listPage;
+            elBack.href = 'index3.html?page=' + listPage;
         }
 
         function render(d) {
