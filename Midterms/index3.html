@@ -161,17 +161,14 @@
 
         // Pagination: wraps around at both ends
         function prev() {
+            if (page <= 1) return;
             page -= 1;
-            function prev() {
-                if (page <= 1) return;
-                page -= 1;
-                loadPage();
-            }
+            loadPage(); s
         }
 
         function next() {
+            if (finalPage && page >= finalPage) return;
             page += 1;
-            if (finalPage && page > finalPage) page = 1;
             loadPage();
         }
 
