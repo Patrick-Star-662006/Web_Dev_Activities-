@@ -162,8 +162,11 @@
         // Pagination: wraps around at both ends
         function prev() {
             page -= 1;
-            if (page < 1) page = finalPage || 1;
-            loadPage();
+            function prev() {
+                if (page <= 1) return;
+                page -= 1;
+                loadPage();
+            }
         }
 
         function next() {
